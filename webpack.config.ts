@@ -12,7 +12,7 @@ interface IEnvironmentVariables {
 }
 
 export default (env: IEnvironmentVariables): Configuration => {
-  env.mode = env.mode ? env.mode : 'development';
+  env.mode = env.mode ?? 'development';
 
   const paths: IBuildPaths = {
     entry: join(__dirname, 'src', 'index.tsx'),
