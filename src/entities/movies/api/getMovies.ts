@@ -25,9 +25,12 @@ export const getMovies = async (params: ISettings = {}): Promise<IShortMovie[]> 
   const page = params.page ?? 1;
   const limit = params.limit ?? 50;
 
-  const { data } = await moviesFetcher.get<{ docs: IShortMovie[] }>('', {
-    params: { page, limit, selectedFields: shortMovieFields },
-  });
+  const responseFieldsQuery = shortMovieFields
+    .map((fieldName): string => `selectFields=${fieldName}`)
+    .join('&');
+  const query = `page=${page}&limit=${limit}&${responseFieldsQuery}`;
+
+  const { data } = await moviesFetcher.get<{ docs: IShortMovie[] }>(`movie?${query}`);
 
   return data.docs;
 };

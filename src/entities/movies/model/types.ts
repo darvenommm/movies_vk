@@ -16,7 +16,7 @@ export interface IMovie {
   alternativeName: string | null;
   year: number | null;
   description: string | null;
-  poster: IPoster;
+  poster?: IPoster;
   rating: IRating;
   genres: IGenre[];
 }

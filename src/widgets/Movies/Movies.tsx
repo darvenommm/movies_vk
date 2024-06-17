@@ -15,8 +15,6 @@ export const Movies = (): JSX.Element => {
   } = useQuery<IShortMovie[]>({
     queryKey: ['movies', page],
     queryFn: () => getMovies({ page }),
-    staleTime: 120 * 60 * 1000,
-    refetchOnWindowFocus: false,
   });
 
   if (isPending) {
@@ -35,6 +33,7 @@ export const Movies = (): JSX.Element => {
         title={movie.alternativeName ?? movie.name}
         year={movie.year}
         rating={movie.rating.imdb}
+        posterUrl={movie.poster?.url ?? null}
       />
     ),
   );
