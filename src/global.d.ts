@@ -82,3 +82,6 @@ declare module '*.svg?url' {
   const svgSrc: string;
   export default svgSrc;
 }
+
+declare const __IS_DEV__: boolean;
+declare const __IS_PROD__: boolean;

@@ -1,0 +1,1 @@
+export { RemoveFavoriteMovieButton } from './RemoveFavoriteMovieButton';

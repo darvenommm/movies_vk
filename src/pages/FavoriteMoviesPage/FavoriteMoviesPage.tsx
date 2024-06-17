@@ -1,3 +1,5 @@
+import { FavoriteMovies } from '@/widgets/FavoriteMovies';
+
 export const FavoriteMoviesPage = (): JSX.Element => {
-  return <div>Favorite Movies page</div>;
+  return <FavoriteMovies />;
 };

@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
 
 import { getMovies, MovieItem, IResponseData } from '@/entities/movies';
+import { ToggleFavoriteMovieButton } from '@/features/favoriteMovies/ToggleFavoriteMovieButton';
 
 export const Movies = (): JSX.Element => {
   const [query, setQuery] = useSearchParams({ page: '1' });
@@ -27,15 +28,29 @@ export const Movies = (): JSX.Element => {
   const { docs: movies, page: currentPage, pages: pageCount } = data;
 
   const moviesItems = movies.map(
-    (movie): JSX.Element => (
+    ({
+      id,
+      alternativeName,
+      year,
+      rating: { imdb: rating },
+      poster: { url: posterUrl },
+    }): JSX.Element => (
       <MovieItem
-        key={movie.id}
-        id={movie.id}
-        title={movie.alternativeName}
-        year={movie.year}
-        rating={movie.rating.imdb}
-        posterUrl={movie.poster.url}
-      />
+        key={id}
+        id={id}
+        title={alternativeName}
+        year={year}
+        rating={rating}
+        posterUrl={posterUrl}
+      >
+        <ToggleFavoriteMovieButton
+          id={id}
+          title={alternativeName}
+          year={year}
+          rating={rating}
+          posterUrl={posterUrl}
+        />
+      </MovieItem>
     ),
   );
 

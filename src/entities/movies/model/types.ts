@@ -14,8 +14,8 @@ interface IBaseMovie {
   id: number;
   alternativeName: string;
   year: number;
-  poster: IPoster;
   rating: IRating;
+  poster: IPoster;
 }
 
 export interface IShortMovie extends IBaseMovie {}

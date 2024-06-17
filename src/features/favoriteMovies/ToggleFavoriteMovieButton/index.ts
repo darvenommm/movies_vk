@@ -1,0 +1,1 @@
+export { ToggleFavoriteMovieButton } from './ToggleFavoriteMovieButton';
