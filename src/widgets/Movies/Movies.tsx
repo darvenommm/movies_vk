@@ -1,21 +1,20 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useSearchParams } from 'react-router-dom';
 
-import { getMovies, MovieItem, IShortMovie } from '@/entities/movies';
-
-const MAX_PAGE_COUNT = 5;
+import { getMovies, MovieItem, IResponseData } from '@/entities/movies';
 
 export const Movies = (): JSX.Element => {
-  const [page, setPage] = useState<number>(1);
-  const {
-    data: movies,
-    isPending,
-    isError,
-    error,
-  } = useQuery<IShortMovie[]>({
+  const [query, setQuery] = useSearchParams({ page: '1' });
+  const [page, setPage] = useState<number>(Number(query.get('page')));
+  const { data, isPending, isError, error } = useQuery<IResponseData>({
     queryKey: ['movies', page],
     queryFn: () => getMovies({ page }),
   });
+
+  useEffect((): void => {
+    setQuery({ page: String(page) });
+  }, [page]);
 
   if (isPending) {
     return <p>Loading...</p>;
@@ -25,15 +24,17 @@ export const Movies = (): JSX.Element => {
     return <p>Error: {error.message}</p>;
   }
 
+  const { docs: movies, page: currentPage, pages: pageCount } = data;
+
   const moviesItems = movies.map(
     (movie): JSX.Element => (
       <MovieItem
         key={movie.id}
         id={movie.id}
-        title={movie.alternativeName ?? movie.name}
+        title={movie.alternativeName}
         year={movie.year}
         rating={movie.rating.imdb}
-        posterUrl={movie.poster?.url ?? null}
+        posterUrl={movie.poster.url}
       />
     ),
   );
@@ -47,10 +48,13 @@ export const Movies = (): JSX.Element => {
         </button>
         <button
           onClick={(): void => setPage((page): number => page + 1)}
-          disabled={page > MAX_PAGE_COUNT - 1}
+          disabled={page >= pageCount}
         >
           Next
         </button>
+        <p>
+          {currentPage}/{pageCount}
+        </p>
       </div>
     </>
   );

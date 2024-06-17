@@ -1,11 +1,10 @@
-import type { IMovie } from '../../model/types';
-
-type UsedFields = 'year' | 'description' | 'genres';
-
-interface IMovieBlockProps extends Pick<IMovie, UsedFields> {
-  title: string | null;
-  posterUrl: string | null;
+interface IMovieBlockProps {
+  title: string;
+  year: number;
+  posterUrl: string;
   rating: number;
+  description: string;
+  genres: string[];
 }
 
 export const MovieBlock = ({
@@ -18,21 +17,12 @@ export const MovieBlock = ({
 }: IMovieBlockProps): JSX.Element => {
   return (
     <div>
-      {posterUrl ? (
-        <img width={200} height={300} src={posterUrl} alt="" />
-      ) : (
-        <p>Not has a poster</p>
-      )}
-      <p>Title: {title ?? 'not has a title'}</p>
-      <p>Year: {year ?? 'unknown year'}</p>
-      <p>Rating: {rating || 'not has a rating'}</p>
-      <p>
-        Genres:{' '}
-        {genres.length === 0
-          ? 'Not has a genres'
-          : genres.map((genre): string => genre.name).join(', ')}
-      </p>
-      <p>Description: {description ?? 'Not has a description'}</p>
+      <img width={200} height={300} src={posterUrl} alt="" />
+      <p>Title: {title}</p>
+      <p>Year: {year}</p>
+      <p>Rating: {rating || 'Not has a rating'}</p>
+      <p>Genres: {genres.join(', ')}</p>
+      <p>Description: {description}</p>
     </div>
   );
 };

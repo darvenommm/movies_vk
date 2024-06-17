@@ -1,36 +1,37 @@
 import { moviesFetcher } from './fetcher';
 
-import type { IMovie } from '../model/types';
+import type { IShortMovie } from '../model/types';
 
 interface ISettings {
   page?: number;
   limit?: number;
 }
 
-export type IShortMovie = Pick<
-  IMovie,
-  'id' | 'name' | 'alternativeName' | 'year' | 'poster' | 'rating'
->;
+export interface IResponseData {
+  docs: IShortMovie[];
+  page: number;
+  pages: number;
+}
 
-export const shortMovieFields: Array<keyof IMovie> = [
-  'id',
-  'name',
-  'alternativeName',
-  'year',
-  'poster',
-  'rating',
-];
+const needFields: string[] = ['id', 'alternativeName', 'year', 'poster', 'rating'];
+const notEmptyFields: string[] = ['alternativeName', 'year', 'poster.url'];
 
-export const getMovies = async (params: ISettings = {}): Promise<IShortMovie[]> => {
+export const getMovies = async (params: ISettings = {}): Promise<IResponseData> => {
   const page = params.page ?? 1;
   const limit = params.limit ?? 50;
 
-  const responseFieldsQuery = shortMovieFields
-    .map((fieldName): string => `selectFields=${fieldName}`)
-    .join('&');
-  const query = `page=${page}&limit=${limit}&${responseFieldsQuery}`;
+  const queryParams = { page, limit };
 
-  const { data } = await moviesFetcher.get<{ docs: IShortMovie[] }>(`movie?${query}`);
+  const parsedQuery = Object.entries(queryParams).map(
+    ([name, value]): string => `${name}=${value}`,
+  );
+  const needFieldsQuery = needFields.map((fieldName): string => `selectFields=${fieldName}`);
+  const notEmptyFieldsQuery = notEmptyFields.map(
+    (fieldName): string => `notNullFields=${fieldName}`,
+  );
 
-  return data.docs;
+  const query = [...parsedQuery, ...notEmptyFieldsQuery, ...needFieldsQuery].join('&');
+  const { data } = await moviesFetcher.get<IResponseData>(`movie?${query}`);
+
+  return data;
 };

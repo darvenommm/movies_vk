@@ -1,5 +1,5 @@
 interface IPoster {
-  url: string | null;
+  url: string;
 }
 
 interface IRating {
@@ -10,13 +10,17 @@ interface IGenre {
   name: string;
 }
 
-export interface IMovie {
+interface IBaseMovie {
   id: number;
-  name: string | null;
-  alternativeName: string | null;
-  year: number | null;
-  description: string | null;
-  poster?: IPoster;
+  alternativeName: string;
+  year: number;
+  poster: IPoster;
   rating: IRating;
+}
+
+export interface IShortMovie extends IBaseMovie {}
+
+export interface IMovie extends IBaseMovie {
+  description: string;
   genres: IGenre[];
 }

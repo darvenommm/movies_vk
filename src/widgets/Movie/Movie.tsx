@@ -27,12 +27,12 @@ export const Movie = (): JSX.Element => {
   return (
     <div>
       <MovieBlock
-        title={movie.alternativeName ?? movie.name}
+        title={movie.alternativeName}
         description={movie.description}
         year={movie.year}
         posterUrl={movie.poster?.url ?? null}
         rating={movie.rating.imdb}
-        genres={movie.genres}
+        genres={movie.genres.map((genre): string => genre.name)}
       />
     </div>
   );
