@@ -42,7 +42,7 @@ export const getMovies = async (params: ISettings = {}): Promise<IResponseData> 
   }
 
   if (params.ratings?.length) {
-    queryParams['rating.name'] = params.ratings.join('-');
+    queryParams['rating.imdb'] = params.ratings.join('-');
   }
 
   if (params.startYears?.length) {

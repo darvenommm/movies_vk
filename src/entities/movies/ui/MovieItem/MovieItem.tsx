@@ -36,7 +36,7 @@ export const MovieItem = ({
       />
       <p>Title: {title}</p>
       <p>Year: {year}</p>
-      <p>Rating: {rating || 'Not has a rating'}</p>
+      <p>Rating: {rating ?? 'Not has a rating'}</p>
       <div className={classes.bottom}>
         <Link className={buttonStyle.button} to={getMoviePath(id)}>
           Go to the movie
