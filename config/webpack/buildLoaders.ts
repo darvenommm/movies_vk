@@ -7,10 +7,7 @@ import type { ModuleOptions } from 'webpack';
 
 import type { IBuildOptions } from './types/types';
 
-export const buildLoaders = ({
-  isDevelopment,
-  paths,
-}: IBuildOptions): ModuleOptions['rules'] => {
+export const buildLoaders = ({ isDevelopment }: IBuildOptions): ModuleOptions['rules'] => {
   const tsLoader = {
     test: /\.[jt]sx?$/i,
     exclude: /(node_modules)/,
@@ -22,32 +19,61 @@ export const buildLoaders = ({
     ],
   };
 
-  const stylesLoader = {
-    test: /\.s(a|c)ss$/i,
-    use: [
-      isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
-      {
-        loader: 'css-loader',
-        options: {
-          sourceMap: isDevelopment,
-          modules: {
-            localIdentName: isDevelopment
-              ? '[path][name]__[local]--[hash:base64:5]'
-              : '[hash:base64:10]',
+  const stylesLoaders = [
+    {
+      test: /\.module.s(a|c)ss$/i,
+      use: [
+        isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
+        {
+          loader: 'css-loader',
+          options: {
+            sourceMap: isDevelopment,
+            modules: {
+              localIdentName: isDevelopment
+                ? '[path][name]__[local]--[hash:base64:5]'
+                : '[hash:base64:10]',
+            },
           },
         },
-      },
-      {
-        loader: 'sass-loader',
-        options: {
-          sourceMap: isDevelopment,
-          sassOptions: {
-            includePaths: [join(paths.src, 'shared', 'styles')],
+        {
+          loader: 'sass-loader',
+          options: {
+            sourceMap: isDevelopment,
           },
         },
-      },
-    ],
-  };
+      ],
+    },
+    {
+      test: /\.s(a|c)ss$/i,
+      use: [
+        isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
+        {
+          loader: 'css-loader',
+          options: {
+            sourceMap: isDevelopment,
+          },
+        },
+        {
+          loader: 'sass-loader',
+          options: {
+            sourceMap: isDevelopment,
+          },
+        },
+      ],
+    },
+    {
+      test: /\.css$/i,
+      use: [
+        isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
+        {
+          loader: 'css-loader',
+          options: {
+            sourceMap: isDevelopment,
+          },
+        },
+      ],
+    },
+  ];
 
   const imageLoader = {
     test: /\.(png|jpg|jpeg|gif|avif|webp)$/i,
@@ -78,12 +104,5 @@ export const buildLoaders = ({
     },
   ];
 
-  return [
-    tsLoader,
-    stylesLoader,
-    ...svgLoaders,
-    imageLoader,
-    textLoader,
-    fontsLoader,
-  ];
+  return [tsLoader, ...stylesLoaders, ...svgLoaders, imageLoader, textLoader, fontsLoader];
 };

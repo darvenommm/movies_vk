@@ -21,7 +21,7 @@ export const MovieBlock = ({
       <p>Title: {title}</p>
       <p>Year: {year}</p>
       <p>Rating: {rating || 'Not has a rating'}</p>
-      <p>Genres: {genres.join(', ')}</p>
+      <p>Genres: {genres.length ? genres.join(', ') : 'Not has genres'}</p>
       <p>Description: {description}</p>
     </div>
   );

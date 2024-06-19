@@ -24,7 +24,7 @@ export const buildPlugins = ({
   const stylePlugin = new MiniCssExtractPlugin();
   const definePlugin = new DefinePlugin({
     __IS_PROD__: JSON.stringify(isProduction),
-    __IS_DEV__: JSON.stringify(isProduction),
+    __IS_DEV__: JSON.stringify(isDevelopment),
   });
 
   const commonPlugins = [htmlPlugin, definePlugin];

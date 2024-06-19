@@ -12,7 +12,7 @@ interface IGenre {
 
 interface IBaseMovie {
   id: number;
-  alternativeName: string;
+  names: Array<{ name: string }>;
   year: number;
   rating: IRating;
   poster: IPoster;
@@ -21,6 +21,6 @@ interface IBaseMovie {
 export interface IShortMovie extends IBaseMovie {}
 
 export interface IMovie extends IBaseMovie {
-  description: string;
-  genres: IGenre[];
+  description?: string;
+  genres?: IGenre[];
 }

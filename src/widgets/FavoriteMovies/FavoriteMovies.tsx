@@ -16,11 +16,9 @@ export const FavoriteMovies = (): JSX.Element => {
       const id = Number(stringId);
 
       return (
-        <li>
-          <MovieItem key={id} id={id} {...favoriteMovieData}>
-            <RemoveFavoriteMovieButton id={id} />
-          </MovieItem>
-        </li>
+        <MovieItem key={id} id={id} {...favoriteMovieData}>
+          <RemoveFavoriteMovieButton id={id} />
+        </MovieItem>
       );
     },
   );

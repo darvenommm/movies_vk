@@ -1,4 +1,4 @@
-export { getMovies } from './api/getMovies';
+export { getMovies, Genres } from './api/getMovies';
 export { getMovie } from './api/getMovie';
 
 export { MovieItem } from './ui/MovieItem/MovieItem';

@@ -10,7 +10,6 @@ interface IMovieItemProps {
   year: number;
   posterUrl: string;
   rating: number;
-
   children?: ReactNode | ReactNode[];
 }
 

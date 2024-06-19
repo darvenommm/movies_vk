@@ -1,76 +1,44 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { useSearchParams } from 'react-router-dom';
 
-import { getMovies, MovieItem, IResponseData } from '@/entities/movies';
-import { ToggleFavoriteMovieButton } from '@/features/favoriteMovies/ToggleFavoriteMovieButton';
+import { MoviesFilters } from './ui/MoviesFilters/MoviesFilters';
+import { MoviesList } from './ui/MoviesList/MoviesList';
+import { MoviesNavigation } from './ui/MoviesNavigation/MoviesNavigation';
+import { getMovies, IResponseData, Genres } from '@/entities/movies';
+
+import { MIN_RATING, MAX_RATING, MIN_START_YEAR, MAX_START_YEAR } from './model/constants';
 
 export const Movies = (): JSX.Element => {
-  const [query, setQuery] = useSearchParams({ page: '1' });
-  const [page, setPage] = useState<number>(Number(query.get('page')));
-  const { data, isPending, isError, error } = useQuery<IResponseData>({
-    queryKey: ['movies', page],
-    queryFn: () => getMovies({ page }),
+  const [page, setPage] = useState<number>(1);
+  const [genre, setGenre] = useState<Genres | null>(null);
+  const [ratings, setRatings] = useState<[number, number]>([MIN_RATING, MAX_RATING]);
+  const [startYears, setStartYears] = useState<[number, number]>([MIN_START_YEAR, MAX_START_YEAR]);
+
+  const { data, isPending, isError, error, isSuccess } = useQuery<IResponseData>({
+    queryKey: ['movies', page, genre, ratings, startYears],
+    queryFn: () => getMovies({ page, genre, ratings, startYears }),
   });
-
-  useEffect((): void => {
-    setQuery({ page: String(page) });
-  }, [page]);
-
-  if (isPending) {
-    return <p>Loading...</p>;
-  }
-
-  if (isError) {
-    return <p>Error: {error.message}</p>;
-  }
-
-  const { docs: movies, page: currentPage, pages: pageCount } = data;
-
-  const moviesItems = movies.map(
-    ({
-      id,
-      alternativeName,
-      year,
-      rating: { imdb: rating },
-      poster: { url: posterUrl },
-    }): JSX.Element => (
-      <MovieItem
-        key={id}
-        id={id}
-        title={alternativeName}
-        year={year}
-        rating={rating}
-        posterUrl={posterUrl}
-      >
-        <ToggleFavoriteMovieButton
-          id={id}
-          title={alternativeName}
-          year={year}
-          rating={rating}
-          posterUrl={posterUrl}
-        />
-      </MovieItem>
-    ),
-  );
 
   return (
     <>
-      <ul>{moviesItems}</ul>
-      <div>
-        <button onClick={(): void => setPage((page): number => page - 1)} disabled={page <= 1}>
-          Previous
-        </button>
-        <button
-          onClick={(): void => setPage((page): number => page + 1)}
-          disabled={page >= pageCount}
-        >
-          Next
-        </button>
-        <p>
-          {currentPage}/{pageCount}
-        </p>
-      </div>
+      <MoviesFilters
+        currentRatings={ratings.join('-')}
+        currentStartYears={startYears.join('-')}
+        changeGenreSelect={(newGenre): void => setGenre(newGenre!.value)}
+        changeRatingsSlider={(newRatings): void => setRatings(newRatings as [number, number])}
+        changeStartYearsSlider={(newStartYears): void =>
+          setStartYears(newStartYears as [number, number])
+        }
+      />
+      {isPending && <p>Loading...</p>}
+      {isError && <p>Error: {error.message}</p>}
+      {isSuccess && <MoviesList movies={data.docs} />}
+      <MoviesNavigation
+        currentPage={data?.page ?? 1}
+        pagesCount={data?.pages ?? 1}
+        clickPreviousButton={(): void => setPage((previousPage): number => previousPage - 1)}
+        clickNextButton={(): void => setPage((previousPage): number => previousPage + 1)}
+      />
     </>
   );
 };
