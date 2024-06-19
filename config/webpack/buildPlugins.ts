@@ -25,6 +25,7 @@ export const buildPlugins = ({
   const definePlugin = new DefinePlugin({
     __IS_PROD__: JSON.stringify(isProduction),
     __IS_DEV__: JSON.stringify(isDevelopment),
+    __MOVIE_API_KEY__: JSON.stringify(process.env.MOVIES_API_KEY),
   });
 
   const commonPlugins = [htmlPlugin, definePlugin];

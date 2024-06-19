@@ -38,6 +38,7 @@
     "@reduxjs/toolkit": "^2.2.5",
     "@tanstack/react-query": "^5.45.1",
     "axios": "^1.7.2",
+    "dotenv": "^16.4.5",
     "rc-slider": "^10.6.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

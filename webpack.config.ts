@@ -1,6 +1,7 @@
 import { join } from 'node:path';
 
 import { buildConfig } from './config/webpack';
+import 'dotenv/config';
 
 import type { Configuration } from 'webpack';
 

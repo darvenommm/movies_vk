@@ -85,3 +85,4 @@ declare module '*.svg?url' {
 
 declare const __IS_DEV__: boolean;
 declare const __IS_PROD__: boolean;
+declare const __MOVIE_API_KEY__: string;
