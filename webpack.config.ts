@@ -25,7 +25,7 @@ export default (env: IEnvironmentVariables): Configuration => {
     mode: env.mode,
     isDevelopment: env.mode === 'development',
     isProduction: env.mode === 'production',
-    port: env.port ?? 3000,
+    port: env.port ?? 3001,
     paths,
   };
 

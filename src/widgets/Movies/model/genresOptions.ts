@@ -9,7 +9,7 @@ const genresOptions = Object.entries(Genres).map(
 
 genresOptions.unshift({
   value: null,
-  label: 'Without genre',
+  label: 'Not chosen',
 });
 
 export { genresOptions };

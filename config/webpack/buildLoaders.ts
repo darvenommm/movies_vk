@@ -21,18 +21,13 @@ export const buildLoaders = ({ isDevelopment }: IBuildOptions): ModuleOptions['r
 
   const stylesLoaders = [
     {
-      test: /\.module.s(a|c)ss$/i,
+      test: /^[^.]+\.s(a|c)ss$/i,
       use: [
         isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
         {
           loader: 'css-loader',
           options: {
             sourceMap: isDevelopment,
-            modules: {
-              localIdentName: isDevelopment
-                ? '[path][name]__[local]--[hash:base64:5]'
-                : '[hash:base64:10]',
-            },
           },
         },
         {
@@ -44,13 +39,18 @@ export const buildLoaders = ({ isDevelopment }: IBuildOptions): ModuleOptions['r
       ],
     },
     {
-      test: /\.s(a|c)ss$/i,
+      test: /\.module\.s(a|c)ss$/i,
       use: [
         isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
         {
           loader: 'css-loader',
           options: {
             sourceMap: isDevelopment,
+            modules: {
+              localIdentName: isDevelopment
+                ? '[path][name]__[local]--[hash:base64:5]'
+                : '[hash:base64:10]',
+            },
           },
         },
         {

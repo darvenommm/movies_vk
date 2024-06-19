@@ -2,11 +2,12 @@ import Select from 'react-select';
 import Slider from 'rc-slider';
 
 import { genresOptions } from '../../model/genresOptions';
+import { MIN_RATING, MAX_RATING, MIN_START_YEAR, MAX_START_YEAR } from '../../model/constants';
+
+import classes from './MoviesFilters.module.scss';
 
 import type { SingleValue } from 'react-select';
 import type { Genres } from '@/entities/movies';
-
-import { MIN_RATING, MAX_RATING, MIN_START_YEAR, MAX_START_YEAR } from '../../model/constants';
 
 interface IMoviesFiltersProps {
   currentRatings: string;
@@ -24,15 +25,7 @@ export const MoviesFilters = ({
   changeStartYearsSlider,
 }: IMoviesFiltersProps): JSX.Element => {
   return (
-    <div>
-      <div>
-        <span>Genre</span>
-        <Select
-          options={genresOptions}
-          defaultValue={genresOptions[0]}
-          onChange={changeGenreSelect}
-        />
-      </div>
+    <div className={classes.container}>
       <div>
         <span>Movie rating range: {currentRatings}</span>
         <Slider
@@ -51,6 +44,14 @@ export const MoviesFilters = ({
           max={MAX_START_YEAR}
           defaultValue={[MIN_START_YEAR, MAX_START_YEAR]}
           onChangeComplete={changeStartYearsSlider}
+        />
+      </div>
+      <div>
+        <span>Genre:</span>
+        <Select
+          options={genresOptions}
+          defaultValue={genresOptions[0]}
+          onChange={changeGenreSelect}
         />
       </div>
     </div>

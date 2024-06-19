@@ -1,0 +1,19 @@
+@use '@/share/styles/variables' as vars;
+
+.header {
+  background-color: vars.$extra-bg;
+
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}

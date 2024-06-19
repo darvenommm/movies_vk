@@ -25,15 +25,14 @@ export const Movie = (): JSX.Element => {
   }
 
   return (
-    <div>
-      <MovieBlock
-        title={movie.names?.[0].name ?? 'Not has a title'}
-        description={movie.description ?? 'Not has a description'}
-        year={movie.year}
-        posterUrl={movie.poster?.url ?? null}
-        rating={movie.rating.imdb}
-        genres={movie.genres?.map((genre): string => genre.name) ?? []}
-      />
-    </div>
+    <MovieBlock
+      id={movie.id}
+      title={movie.names?.[0].name ?? 'Not has a title'}
+      description={movie.description ?? 'Not has a description'}
+      year={movie.year}
+      posterUrl={movie.poster?.url ?? null}
+      rating={movie.rating.imdb}
+      genres={movie.genres?.map((genre): string => genre.name) ?? []}
+    />
   );
 };

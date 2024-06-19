@@ -4,9 +4,13 @@ import { removeFavoriteMovie } from '@/entities/favoriteMovies';
 
 interface IRemoveFavoriteMovieButtonProps {
   id: number;
+  className?: string;
 }
 
-export const RemoveFavoriteMovieButton = ({ id }: IRemoveFavoriteMovieButtonProps): JSX.Element => {
+export const RemoveFavoriteMovieButton = ({
+  id,
+  className,
+}: IRemoveFavoriteMovieButtonProps): JSX.Element => {
   const dispatcher = useAppDispatch();
 
   const clickButtonHandler = (): void => {
@@ -14,7 +18,7 @@ export const RemoveFavoriteMovieButton = ({ id }: IRemoveFavoriteMovieButtonProp
   };
 
   return (
-    <button onClick={clickButtonHandler} type="button">
+    <button className={className} onClick={clickButtonHandler} type="button">
       Remove from favorite
     </button>
   );

@@ -32,13 +32,17 @@ export const Movies = (): JSX.Element => {
       />
       {isPending && <p>Loading...</p>}
       {isError && <p>Error: {error.message}</p>}
-      {isSuccess && <MoviesList movies={data.docs} />}
-      <MoviesNavigation
-        currentPage={data?.page ?? 1}
-        pagesCount={data?.pages ?? 1}
-        clickPreviousButton={(): void => setPage((previousPage): number => previousPage - 1)}
-        clickNextButton={(): void => setPage((previousPage): number => previousPage + 1)}
-      />
+      {isSuccess && (
+        <>
+          <MoviesList movies={data.docs} />
+          <MoviesNavigation
+            currentPage={data.page}
+            pagesCount={data.pages}
+            clickPreviousButton={(): void => setPage((previousPage): number => previousPage - 1)}
+            clickNextButton={(): void => setPage((previousPage): number => previousPage + 1)}
+          />
+        </>
+      )}
     </>
   );
 };

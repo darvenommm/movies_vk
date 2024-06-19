@@ -9,8 +9,9 @@ import type { IFavoriteMovie } from '@/entities/favoriteMovies';
 
 export const ToggleFavoriteMovieButton = ({
   id,
+  className,
   ...favoriteMoviesData
-}: { id: number } & IFavoriteMovie): JSX.Element => {
+}: { id: number; className?: string } & IFavoriteMovie): JSX.Element => {
   const dispatcher = useAppDispatch();
   const doesExistMovie = useAppSelector((state) => selectDoesMovieExist(state, id));
 
@@ -23,7 +24,7 @@ export const ToggleFavoriteMovieButton = ({
   };
 
   return (
-    <button onClick={clickButtonHandler} type="button">
+    <button className={className} onClick={clickButtonHandler} type="button">
       {doesExistMovie ? 'Remove' : 'Add'}
     </button>
   );

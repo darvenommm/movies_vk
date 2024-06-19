@@ -4,6 +4,9 @@ import { MovieItem } from '@/entities/movies';
 import { RemoveFavoriteMovieButton } from '@/features/favoriteMovies/RemoveFavoriteMovieButton';
 import { selectFavoriteMovies } from '@/entities/favoriteMovies';
 
+import buttonStyle from '@/share/styles/components/button.module.scss';
+import classes from './FavoriteMovies.module.scss';
+
 export const FavoriteMovies = (): JSX.Element => {
   const favoriteMovies = useAppSelector(selectFavoriteMovies);
 
@@ -17,11 +20,11 @@ export const FavoriteMovies = (): JSX.Element => {
 
       return (
         <MovieItem key={id} id={id} {...favoriteMovieData}>
-          <RemoveFavoriteMovieButton id={id} />
+          <RemoveFavoriteMovieButton className={buttonStyle.button} id={id} />
         </MovieItem>
       );
     },
   );
 
-  return <ul>{favoriteMoviesElements}</ul>;
+  return <ul className={classes.movies}>{favoriteMoviesElements}</ul>;
 };

@@ -1,6 +1,9 @@
 import { MovieItem } from '@/entities/movies';
 import { ToggleFavoriteMovieButton } from '@/features/favoriteMovies/ToggleFavoriteMovieButton';
 
+import buttonStyle from '@/share/styles/components/button.module.scss';
+import classes from './MoviesList.module.scss';
+
 import type { IResponseData } from '@/entities/movies';
 
 interface IMoviesListProps {
@@ -19,6 +22,7 @@ export const MoviesList = ({ movies }: IMoviesListProps): JSX.Element => {
         posterUrl={posterUrl}
       >
         <ToggleFavoriteMovieButton
+          className={buttonStyle.button}
           id={id}
           title={names[0]?.name ?? 'Unknown title'}
           year={year}
@@ -29,5 +33,5 @@ export const MoviesList = ({ movies }: IMoviesListProps): JSX.Element => {
     ),
   );
 
-  return <ul>{moviesItems}</ul>;
+  return <ul className={classes.movies}>{moviesItems}</ul>;
 };

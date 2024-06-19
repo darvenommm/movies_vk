@@ -1,0 +1,11 @@
+@use '@/share/styles/variables' as vars;
+
+.movie {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+
+  background-color: vars.$extra-bg;
+  border-radius: 20px;
+  padding: 20px;
+}

@@ -1,0 +1,32 @@
+@use '@/share/styles/variables' as vars;
+@use '@/share/styles/mixins';
+
+.button {
+  color: #ffffff;
+  text-decoration: none;
+  text-transform: capitalize;
+
+  background-color: vars.$active-color;
+  border-radius: 15px;
+  transition: opacity 250ms;
+
+  border: none;
+  padding: 5px 10px;
+
+  @include mixins.hover {
+    opacity: 0.7;
+  }
+
+  @include mixins.active {
+    opacity: 0.4;
+  }
+
+  @include mixins.focus-visible {
+    opacity: 0.7;
+    outline: 2px solid #5ac85a;
+  }
+
+  @include mixins.disabled {
+    opacity: 0.4;
+  }
+}
